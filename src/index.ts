@@ -17,8 +17,8 @@ class Database {
 
     public async start(): Promise<void> {
         this.db = new sqlite.Database(this.filepath);
-        await once(this.db, 'open');
         promisifyAll(this.db);
+        await once(this.db, 'open');
         this.db.configure('busyTimeout', 1000);
         await this.db.serializeAsync();
     }

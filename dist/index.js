@@ -14,8 +14,8 @@ class Database {
     }
     async start() {
         this.db = new sqlite3_1.default.Database(this.filepath);
-        await events_1.once(this.db, 'open');
         bluebird_1.promisifyAll(this.db);
+        await events_1.once(this.db, 'open');
         this.db.configure('busyTimeout', 1000);
         await this.db.serializeAsync();
     }
