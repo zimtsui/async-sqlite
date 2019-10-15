@@ -20,7 +20,8 @@ class Database {
         await this.db.serializeAsync();
     }
     async stop() {
-        await this.db.closeAsync();
+        if (this.db)
+            await this.db.closeAsync();
     }
     async sql(template, ...params) {
         const statement = util_1.format(template, ...params);
