@@ -4,7 +4,7 @@ declare class Database {
     constructor(filepath: string);
     start(): Promise<void>;
     stop(): Promise<void>;
-    sql(template: any, ...params: any[]): Promise<any>;
+    sql(template: string, ...params: unknown[]): Promise<any>;
 }
 export default Database;
 export { Database };

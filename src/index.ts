@@ -27,7 +27,7 @@ class Database {
         if (this.db) await this.db.closeAsync();
     }
 
-    public async sql(template: any, ...params: any[]): Promise<any> {
+    public async sql(template: string, ...params: unknown[]): Promise<any> {
         const statement = format(template, ...params);
         return await this.db.allAsync(statement);
     }
