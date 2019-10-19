@@ -17,7 +17,7 @@ class Database {
         bluebird_1.promisifyAll(this.db);
         await events_1.once(this.db, 'open');
         this.db.configure('busyTimeout', 1000);
-        await this.db.serializeAsync();
+        // await this.db.serializeAsync();
     }
     async stop() {
         if (this.db)

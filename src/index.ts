@@ -20,7 +20,7 @@ class Database {
         promisifyAll(this.db);
         await once(this.db, 'open');
         this.db.configure('busyTimeout', 1000);
-        await this.db.serializeAsync();
+        // await this.db.serializeAsync();
     }
 
     public async stop(): Promise<void> {
