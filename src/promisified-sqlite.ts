@@ -6,7 +6,7 @@ sqlite.verbose();
 
 interface PromisifiedDatabase extends sqlite.Database {
     closeAsync(): Promise<void>;
-    allAsync<T>(clause: string): Promise<T>;
+    allAsync<T>(clause: string): Promise<T[]>;
 };
 
 class Database extends Startable {
@@ -27,7 +27,7 @@ class Database extends Startable {
         await this.db!.closeAsync();
     }
 
-    public async sql<T>(clause: string): Promise<T> {
+    public async sql<T>(clause: string): Promise<T[]> {
         return await this.db!.allAsync<T>(clause);
     }
 }
