@@ -1,0 +1,26 @@
+import sqlite from 'sqlite3';
+import { once } from 'events';
+import { promisifyAll } from 'bluebird';
+import Startable from 'startable';
+sqlite.verbose();
+;
+class Database extends Startable {
+    constructor(filepath) {
+        super();
+        this.filepath = filepath;
+    }
+    async _start() {
+        this.db = promisifyAll(new sqlite.Database(this.filepath));
+        await once(this.db, 'open');
+        this.db.configure('busyTimeout', 1000);
+        // await this.db.serializeAsync();
+    }
+    async _stop() {
+        await this.db.closeAsync();
+    }
+    async sql(clause) {
+        return await this.db.allAsync(clause);
+    }
+}
+export { Database as default, Database, };
+//# sourceMappingURL=promisified-sqlite.js.map
