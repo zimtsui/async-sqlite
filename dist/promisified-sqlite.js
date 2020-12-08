@@ -5,12 +5,12 @@ import Startable from 'startable';
 sqlite.verbose();
 ;
 class Database extends Startable {
-    constructor(filepath) {
+    constructor(filePath) {
         super();
-        this.filepath = filepath;
+        this.filePath = filePath;
     }
     async _start() {
-        this.db = promisifyAll(new sqlite.Database(this.filepath));
+        this.db = promisifyAll(new sqlite.Database(this.filePath));
         await once(this.db, 'open');
         this.db.configure('busyTimeout', 1000);
         // await this.db.serializeAsync();

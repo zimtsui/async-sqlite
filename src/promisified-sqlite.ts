@@ -12,12 +12,12 @@ interface PromisifiedDatabase extends sqlite.Database {
 class Database extends Startable {
     private db?: PromisifiedDatabase;
 
-    constructor(private filepath: string) {
+    constructor(private filePath: string) {
         super();
     }
 
     protected async _start(): Promise<void> {
-        this.db = <PromisifiedDatabase>promisifyAll(new sqlite.Database(this.filepath));
+        this.db = <PromisifiedDatabase>promisifyAll(new sqlite.Database(this.filePath));
         await once(this.db, 'open');
         this.db.configure('busyTimeout', 1000);
         // await this.db.serializeAsync();
