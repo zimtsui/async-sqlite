@@ -1,7 +1,8 @@
 import sqlite from 'sqlite3';
 import { once } from 'events';
-import { promisifyAll } from 'bluebird';
+import Bluebird from 'bluebird';
 import Startable from 'startable';
+const { promisifyAll } = Bluebird;
 sqlite.verbose();
 
 interface PromisifiedDatabase extends sqlite.Database {
