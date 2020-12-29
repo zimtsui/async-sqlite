@@ -43,17 +43,15 @@ class Database extends Startable {
 
     public async sql<T>(clause: string): Promise<T[]> {
         const r = await this.db!.allAsync<T>(clause);
-
         if (++this.statementCount === COMMIT_INTERVAL) {
             this.statementCount = 0;
             await this.sql(`COMMIT;BEGIN;`);
         }
-
         return r;
     }
 }
 
 export {
-    // Database as default,
+    Database as default,
     Database,
 }

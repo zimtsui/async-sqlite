@@ -14,4 +14,4 @@ declare class Database extends Startable {
     protected _stop(): Promise<void>;
     sql<T>(clause: string): Promise<T[]>;
 }
-export { Database, };
+export { Database as default, Database, };

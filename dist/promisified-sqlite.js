@@ -38,7 +38,5 @@ class Database extends Startable {
         return r;
     }
 }
-export { 
-// Database as default,
-Database, };
+export { Database as default, Database, };
 //# sourceMappingURL=promisified-sqlite.js.map
