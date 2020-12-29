@@ -15,7 +15,7 @@ class Database extends Startable {
     }
     async _start() {
         // if the containing directory doesn't exist, node-sqlite3 won't throw
-        // but will exit for segment fault. here it has to be thread unsafe.
+        // but will exit for segment fault. here it's doomed to be thread unsafe.
         await ensureDir(dirname(this.filePath));
         this.db = promisifyAll(new sqlite.Database(this.filePath));
         await once(this.db, 'open');
