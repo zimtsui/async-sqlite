@@ -2,9 +2,10 @@ import sqlite from 'sqlite3';
 import { once } from 'events';
 import Bluebird from 'bluebird';
 import Startable from 'startable';
-import { ensureDir } from 'fs-extra';
+import fse from 'fs-extra';
 import { dirname } from 'path';
 const { promisifyAll } = Bluebird;
+const { ensureDir } = fse;
 sqlite.verbose();
 
 interface PromisifiedDatabase extends sqlite.Database {
