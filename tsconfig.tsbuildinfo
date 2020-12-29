@@ -201,6 +201,11 @@
         "signature": "cd6efb9467a8b6338ece2e2855e37765700f2cd061ca54b01b33878cf5c7677e",
         "affectsGlobalScope": true
       },
+      "./src/config.ts": {
+        "version": "05127206d0fc3c6c746704c7f3153383c193a9c401e02ba221e9e18420780d5e",
+        "signature": "0dd1c2cfe5732832a2a920b974b5bb88a1c0d55cd48e7937d87a3f61ec407d26",
+        "affectsGlobalScope": false
+      },
       "./node_modules/@types/node/globals.d.ts": {
         "version": "cdbd1c3e0c329abaa9442d3dd8b62699464a26b2e8e36fbde362bd4e7d490f16",
         "signature": "cdbd1c3e0c329abaa9442d3dd8b62699464a26b2e8e36fbde362bd4e7d490f16",
@@ -472,8 +477,8 @@
         "affectsGlobalScope": false
       },
       "./src/promisified-sqlite.ts": {
-        "version": "551f1c15611ef7cd63f44c23b2228c81a35bfa6aa269ad74495f75ad068e41c1",
-        "signature": "0069f8c38df6c8aaf3184ced908a0984b21d4878ac21d901ce349ab6ce73dd07",
+        "version": "34892942e22e7979724c4869e376efd5848dcd95b73801f259a883791ba25987",
+        "signature": "5600e713a296f4dc8c31fcd298d7d17de61396534946b23359f9a5b0aaf67a02",
         "affectsGlobalScope": false
       },
       "../../node_modules/@types/accepts/index.d.ts": {
@@ -831,7 +836,8 @@
         "./node_modules/@types/node/events.d.ts",
         "./node_modules/@types/node/path.d.ts",
         "./node_modules/@types/sqlite3/index.d.ts",
-        "./node_modules/startable/dist/index.d.ts"
+        "./node_modules/startable/dist/index.d.ts",
+        "./src/config.ts"
       ]
     },
     "exportedModulesMap": {
@@ -1081,6 +1087,7 @@
         "./node_modules/@types/node/index.d.ts"
       ],
       "./src/promisified-sqlite.ts": [
+        "./node_modules/@types/sqlite3/index.d.ts",
         "./node_modules/startable/dist/index.d.ts"
       ]
     },
@@ -1156,6 +1163,7 @@
       "./node_modules/startable/dist/adaptor.d.ts",
       "./node_modules/startable/dist/index.d.ts",
       "./node_modules/startable/dist/startable.d.ts",
+      "./src/config.ts",
       "./src/promisified-sqlite.ts",
       "../../../../usr/local/lib/node_modules/typescript/lib/lib.es2015.collection.d.ts",
       "../../../../usr/local/lib/node_modules/typescript/lib/lib.es2015.core.d.ts",
