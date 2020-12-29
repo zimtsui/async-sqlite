@@ -41,7 +41,7 @@ class Database extends Startable {
         await this.db!.closeAsync();
     }
 
-    public async sql<T>(clause: string): Promise<T[]> {
+    public async sql<T = void>(clause: string): Promise<T[]> {
         const r = await this.db!.allAsync<T>(clause);
         if (++this.statementCount === COMMIT_INTERVAL) {
             this.statementCount = 0;
