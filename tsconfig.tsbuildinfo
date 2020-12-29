@@ -466,8 +466,13 @@
         "signature": "a8a17c833a6e857778c83fb00d47df12270bd703ce3974baace8dd4be5e0fc47",
         "affectsGlobalScope": false
       },
+      "./node_modules/@types/fs-extra/index.d.ts": {
+        "version": "8126afccdf4a55b90e010207e6fa74ea47dc0932b4d1347726b92502fe11a2e1",
+        "signature": "8126afccdf4a55b90e010207e6fa74ea47dc0932b4d1347726b92502fe11a2e1",
+        "affectsGlobalScope": false
+      },
       "./src/promisified-sqlite.ts": {
-        "version": "8e1ecb52b8284c7f4d7c87146eca6c44b91151cf2662e06336178370e657a94d",
+        "version": "b860cf85370bac10e2c902ee5e8a88facaec5033f764b04feb03663c41d7a3a4",
         "signature": "0069f8c38df6c8aaf3184ced908a0984b21d4878ac21d901ce349ab6ce73dd07",
         "affectsGlobalScope": false
       },
@@ -632,6 +637,10 @@
       "../../node_modules/@types/serve-static/index.d.ts": [
         "../../node_modules/@types/mime/index.d.ts",
         "./node_modules/@types/node/http.d.ts",
+        "./node_modules/@types/node/index.d.ts"
+      ],
+      "./node_modules/@types/fs-extra/index.d.ts": [
+        "./node_modules/@types/node/fs.d.ts",
         "./node_modules/@types/node/index.d.ts"
       ],
       "./node_modules/@types/node/base.d.ts": [
@@ -818,7 +827,9 @@
       ],
       "./src/promisified-sqlite.ts": [
         "./node_modules/@types/bluebird/index.d.ts",
+        "./node_modules/@types/fs-extra/index.d.ts",
         "./node_modules/@types/node/events.d.ts",
+        "./node_modules/@types/node/path.d.ts",
         "./node_modules/@types/sqlite3/index.d.ts",
         "./node_modules/startable/dist/index.d.ts"
       ]
@@ -881,6 +892,10 @@
       "../../node_modules/@types/serve-static/index.d.ts": [
         "../../node_modules/@types/mime/index.d.ts",
         "./node_modules/@types/node/http.d.ts",
+        "./node_modules/@types/node/index.d.ts"
+      ],
+      "./node_modules/@types/fs-extra/index.d.ts": [
+        "./node_modules/@types/node/fs.d.ts",
         "./node_modules/@types/node/index.d.ts"
       ],
       "./node_modules/@types/node/base.d.ts": [
@@ -1089,6 +1104,7 @@
       "../../node_modules/@types/serve-static/index.d.ts",
       "./node_modules/@types/bluebird/index.d.ts",
       "./node_modules/@types/events/index.d.ts",
+      "./node_modules/@types/fs-extra/index.d.ts",
       "./node_modules/@types/node/assert.d.ts",
       "./node_modules/@types/node/async_hooks.d.ts",
       "./node_modules/@types/node/base.d.ts",

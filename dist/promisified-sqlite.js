@@ -2,6 +2,8 @@ import sqlite from 'sqlite3';
 import { once } from 'events';
 import Bluebird from 'bluebird';
 import Startable from 'startable';
+import { ensureDir } from 'fs-extra';
+import { dirname } from 'path';
 const { promisifyAll } = Bluebird;
 sqlite.verbose();
 ;
@@ -11,6 +13,7 @@ class Database extends Startable {
         this.filePath = filePath;
     }
     async _start() {
+        await ensureDir(dirname(this.filePath));
         this.db = promisifyAll(new sqlite.Database(this.filePath));
         await once(this.db, 'open');
         this.db.configure('busyTimeout', 1000);
