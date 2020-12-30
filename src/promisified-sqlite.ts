@@ -33,11 +33,11 @@ class Database extends Startable {
         this.db.configure('busyTimeout', 1000);
         // if parallelized, COMMIT in stop() may not be latest executed.
         this.db.serialize();
-        await this.sql(`BEGIN;`);
+        await this.db!.allAsync(`BEGIN;`);
     }
 
     protected async _stop(): Promise<void> {
-        await this.sql(`COMMIT;`);
+        await this.db!.allAsync(`COMMIT;`);
         await this.db!.closeAsync();
     }
 
@@ -45,7 +45,8 @@ class Database extends Startable {
         const r = await this.db!.allAsync<T>(clause);
         if (++this.statementCount === COMMIT_INTERVAL) {
             this.statementCount = 0;
-            await this.sql(`COMMIT;BEGIN;`);
+            await this.db!.allAsync(`COMMIT;`);
+            await this.db!.allAsync(`BEGIN;`);
         }
         return r;
     }

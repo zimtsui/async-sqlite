@@ -477,7 +477,7 @@
         "affectsGlobalScope": false
       },
       "./src/promisified-sqlite.ts": {
-        "version": "2109ebe29da1609780ec285dc6ec522c8c56722495cebb2eda7986c8b5c9e50b",
+        "version": "73d7632a11bc9a8c92309488a9208056a89d71d67a6db76f26e3eb9f75cd8bc2",
         "signature": "84a81986ba1c22341949decf588d8a44f7065e03fff92994c5eb49891ac5a289",
         "affectsGlobalScope": false
       },
