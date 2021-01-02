@@ -4,7 +4,6 @@ import Bluebird from 'bluebird';
 import Startable from 'startable';
 import fse from 'fs-extra';
 import { dirname } from 'path';
-import { COMMIT_INTERVAL } from './config';
 const { promisifyAll } = Bluebird;
 const { ensureDir } = fse;
 sqlite.verbose();
@@ -17,8 +16,7 @@ declare module 'sqlite3' {
 }
 
 class Database extends Startable {
-    private db?: sqlite.Database;
-    private statementCount = 0;
+    private db!: sqlite.Database;
 
     constructor(private filePath: string) {
         super();
@@ -31,24 +29,17 @@ class Database extends Startable {
         this.db = promisifyAll(new sqlite.Database(this.filePath));
         await once(this.db, 'open');
         this.db.configure('busyTimeout', 1000);
-        // if parallelized, COMMIT in stop() may not be latest executed.
-        this.db.serialize();
-        await this.db!.allAsync(`BEGIN;`);
+        // this.db.serialize();
+        await this.db.allAsync(`BEGIN IMMEDIATE;`);
     }
 
     protected async _stop(): Promise<void> {
-        await this.db!.allAsync(`COMMIT;`);
-        await this.db!.closeAsync();
+        await this.db.allAsync(`COMMIT;`);
+        await this.db.closeAsync();
     }
 
     public async sql<T = void>(clause: string): Promise<T[]> {
-        const r = await this.db!.allAsync<T>(clause);
-        if (++this.statementCount === COMMIT_INTERVAL) {
-            this.statementCount = 0;
-            await this.db!.allAsync(`COMMIT;`);
-            await this.db!.allAsync(`BEGIN;`);
-        }
-        return r;
+        return await this.db.allAsync<T>(clause);
     }
 }
 

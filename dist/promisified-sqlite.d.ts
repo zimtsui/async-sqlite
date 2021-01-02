@@ -7,8 +7,7 @@ declare module 'sqlite3' {
 }
 declare class Database extends Startable {
     private filePath;
-    private db?;
-    private statementCount;
+    private db;
     constructor(filePath: string);
     protected _start(): Promise<void>;
     protected _stop(): Promise<void>;
