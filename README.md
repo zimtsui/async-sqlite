@@ -14,4 +14,4 @@ It's a fact that streaming SELECT is important and common-used, but it should be
 
 ## Cache
 
-Technically, it's slow to write into database frequently, but SQLite implements its own cache. See [https://sqlite.org/lockingv3.html](https://sqlite.org/lockingv3.html)
+Technically, it's slow to write into disk frequently, but SQLite implements its own cache. See [https://sqlite.org/lockingv3.html](https://sqlite.org/lockingv3.html)
