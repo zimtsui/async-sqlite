@@ -11,3 +11,7 @@
 [node-sqlite3](https://github.com/mapbox/node-sqlite3) is just a nodejs binding for sqlite, and this library is also just a promisified binding for sqlite. Even the sqlite program itself doesn't offer an interface for streaming SELECT. A binding should have the same interfaces as the original program.
 
 It's a fact that streaming SELECT is important and common-used, but it should be implemented in an upper-level library which uses the binding as a dependency, rather than implemented by binding itself.
+
+## Cache
+
+Technically, it's slow to write into database frequently, but SQLite implements its own cache. See [https://sqlite.org/lockingv3.html](https://sqlite.org/lockingv3.html)
