@@ -19,7 +19,7 @@
         "@types/sqlite3": "^3.1.6",
         "bluebird": "^3.7.1",
         "fs-extra": "^9.0.1",
-        "sqlite3": "^5.0.0",
+        "sqlite3": "5.0.0",
         "startable": "https://gitee.com/zimtsui/startable.git"
     }
 }
