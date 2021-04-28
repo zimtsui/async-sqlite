@@ -11,7 +11,7 @@ sqlite.verbose();
 
 declare module 'sqlite3' {
     interface TypedStatement<T extends object> extends sqlite.Statement {
-        getAsync(): Promise<T>;
+        getAsync(): Promise<T | undefined>;
     }
     export interface Database {
         closeAsync(): Promise<void>;
@@ -52,7 +52,7 @@ class Database extends Startable {
 
     public async *step<T extends object>(clause: string): AsyncGenerator<T> {
         const statement = await this.db.prepareAsync<T>(clause);
-        for (let row: T; row = await statement.getAsync();) yield row;
+        for (let row: T | undefined; row = await statement.getAsync();) yield row;
     }
 }
 

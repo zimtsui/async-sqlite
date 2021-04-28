@@ -2,7 +2,7 @@ import sqlite from 'sqlite3';
 import Startable from 'startable';
 declare module 'sqlite3' {
     interface TypedStatement<T extends object> extends sqlite.Statement {
-        getAsync(): Promise<T>;
+        getAsync(): Promise<T | undefined>;
     }
     interface Database {
         closeAsync(): Promise<void>;
