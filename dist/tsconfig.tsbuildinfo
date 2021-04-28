@@ -472,8 +472,8 @@
         "affectsGlobalScope": false
       },
       "../src/promisified-sqlite.ts": {
-        "version": "5259de3a85dbd69126268dcb6c4b6925f59ee7b849c27570d37e0bd54488c2cf",
-        "signature": "2014cb4bd9e736c97dc4d86b7a1579aefbc989f1058839539bc15c3a020eab15",
+        "version": "ea139f5e153c79edb845db0352bbf4db43bd05b93ef3707cf5dc415a5ababa6e",
+        "signature": "506da4cc35dfe2f4254fdf749724920ca5622b1e553f96f6e02213b0423a8fbb",
         "affectsGlobalScope": false
       }
     },
@@ -744,6 +744,7 @@
       "../src/promisified-sqlite.ts": [
         "../node_modules/@types/bluebird/index.d.ts",
         "../node_modules/@types/fs-extra/index.d.ts",
+        "../node_modules/@types/node/assert.d.ts",
         "../node_modules/@types/node/events.d.ts",
         "../node_modules/@types/node/path.d.ts",
         "../node_modules/@types/sqlite3/index.d.ts",

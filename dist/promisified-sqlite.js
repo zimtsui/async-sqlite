@@ -1,9 +1,10 @@
 import sqlite from 'sqlite3';
 import { once } from 'events';
 import Bluebird from 'bluebird';
-import Startable from 'startable';
+import { Startable } from 'startable';
 import fse from 'fs-extra';
 import { dirname } from 'path';
+import assert from 'assert';
 const { promisifyAll } = Bluebird;
 const { ensureDir } = fse;
 sqlite.verbose();
@@ -22,17 +23,17 @@ class Database extends Startable {
         await ensureDir(dirname(this.filePath));
         this.db = promisifyAll(new sqlite.Database(this.filePath));
         await once(this.db, 'open');
-        // this.db.configure('busyTimeout', 1000);
-        // await this.db.allAsync(`BEGIN IMMEDIATE;`);
     }
     async _stop() {
-        // await this.db.allAsync(`COMMIT;`);
-        await this.db.closeAsync();
+        if (this.db)
+            await this.db.closeAsync();
     }
     async sql(clause) {
+        assert(this.lifePeriod === "STARTED" /* STARTED */);
         return await this.db.allAsync(clause);
     }
     async *step(clause) {
+        assert(this.lifePeriod === "STARTED" /* STARTED */);
         const statement = await this.db.prepareAsync(clause);
         for (let row; row = await statement.getAsync();)
             yield row;

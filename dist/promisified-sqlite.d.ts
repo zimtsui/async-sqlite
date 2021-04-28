@@ -1,5 +1,5 @@
 import sqlite from 'sqlite3';
-import Startable from 'startable';
+import { Startable } from 'startable';
 declare module 'sqlite3' {
     interface TypedStatement<T extends object> extends sqlite.Statement {
         getAsync(): Promise<T | undefined>;
@@ -12,7 +12,7 @@ declare module 'sqlite3' {
 }
 declare class Database extends Startable {
     private filePath;
-    private db;
+    private db?;
     constructor(filePath: string);
     protected _start(): Promise<void>;
     protected _stop(): Promise<void>;

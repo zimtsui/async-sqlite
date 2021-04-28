@@ -1,9 +1,10 @@
 import sqlite from 'sqlite3';
 import { once } from 'events';
 import Bluebird from 'bluebird';
-import Startable from 'startable';
+import { Startable, LifePeriod } from 'startable';
 import fse from 'fs-extra';
 import { dirname } from 'path';
+import assert from 'assert';
 const { promisifyAll } = Bluebird;
 const { ensureDir } = fse;
 sqlite.verbose();
@@ -21,7 +22,7 @@ declare module 'sqlite3' {
 }
 
 class Database extends Startable {
-    private db!: sqlite.Database;
+    private db?: sqlite.Database;
 
     constructor(private filePath: string) {
         super();
@@ -37,21 +38,20 @@ class Database extends Startable {
         await ensureDir(dirname(this.filePath));
         this.db = promisifyAll(new sqlite.Database(this.filePath));
         await once(this.db, 'open');
-        // this.db.configure('busyTimeout', 1000);
-        // await this.db.allAsync(`BEGIN IMMEDIATE;`);
     }
 
     protected async _stop(): Promise<void> {
-        // await this.db.allAsync(`COMMIT;`);
-        await this.db.closeAsync();
+        if (this.db) await this.db.closeAsync();
     }
 
     public async sql<T extends object | null = null>(clause: string): Promise<T[]> {
-        return await this.db.allAsync<T>(clause);
+        assert(this.lifePeriod === LifePeriod.STARTED);
+        return await this.db!.allAsync<T>(clause);
     }
 
     public async *step<T extends object>(clause: string): AsyncGenerator<T> {
-        const statement = await this.db.prepareAsync<T>(clause);
+        assert(this.lifePeriod === LifePeriod.STARTED);
+        const statement = await this.db!.prepareAsync<T>(clause);
         for (let row: T | undefined; row = await statement.getAsync();) yield row;
     }
 }
