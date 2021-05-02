@@ -1,22 +1,16 @@
-import sqlite from 'sqlite3';
 import { Startable } from 'startable';
-declare module 'sqlite3' {
-    interface TypedStatement<T extends object> extends sqlite.Statement {
-        getAsync(): Promise<T | undefined>;
-    }
-    interface Database {
-        closeAsync(): Promise<void>;
-        allAsync<T extends object | null>(clause: string): Promise<T[]>;
-        prepareAsync<T extends object>(clause: string): Promise<TypedStatement<T>>;
-    }
-}
+import { StatementIterator } from './interfaces';
 declare class Database extends Startable {
     private filePath;
     private db?;
+    private iterators;
+    private statements;
     constructor(filePath: string);
     protected _start(): Promise<void>;
     protected _stop(): Promise<void>;
     sql<T extends object | null = null>(clause: string): Promise<T[]>;
-    step<T extends object>(clause: string): AsyncGenerator<T>;
+    open<T extends object>(clause: string): Promise<StatementIterator<T>>;
+    private step;
+    close(iterator: StatementIterator<object>): Promise<void>;
 }
 export { Database as default, Database, };

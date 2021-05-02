@@ -211,6 +211,11 @@
         "signature": "1e61418f41d404e744b6536af9f8c6f6674dd4d54c12335cd0c4f7eded69cf3f",
         "affectsGlobalScope": true
       },
+      "../src/interfaces.ts": {
+        "version": "011db3cd492d188b3e347855d86923d04e5e6e747888448988498929622be2cf",
+        "signature": "d14145d2a424958491ea58baa08d2edbbb26598b2d6d3f34f2c8fc9e18af94a0",
+        "affectsGlobalScope": false
+      },
       "../node_modules/@types/node/globals.d.ts": {
         "version": "25b4a0c4fab47c373ee49df4c239826ee3430019fc0c1b5e59edc3e398b7468d",
         "signature": "25b4a0c4fab47c373ee49df4c239826ee3430019fc0c1b5e59edc3e398b7468d",
@@ -466,14 +471,9 @@
         "signature": "a8a17c833a6e857778c83fb00d47df12270bd703ce3974baace8dd4be5e0fc47",
         "affectsGlobalScope": false
       },
-      "../node_modules/@types/fs-extra/index.d.ts": {
-        "version": "8d01c38ccb9af3a4035a68818799e5ef32ccc8cf70bdb83e181e1921d7ad32f6",
-        "signature": "8d01c38ccb9af3a4035a68818799e5ef32ccc8cf70bdb83e181e1921d7ad32f6",
-        "affectsGlobalScope": false
-      },
       "../src/promisified-sqlite.ts": {
-        "version": "ea139f5e153c79edb845db0352bbf4db43bd05b93ef3707cf5dc415a5ababa6e",
-        "signature": "506da4cc35dfe2f4254fdf749724920ca5622b1e553f96f6e02213b0423a8fbb",
+        "version": "1ca465ec4cb5c57385647e4d98e190e43b777e26b8a111e4a543bc3c6d6e02ac",
+        "signature": "df9a513bfd664352fb588672b2a93bae849ab4373e9e9f5ae79163aa7adbb39d",
         "affectsGlobalScope": false
       }
     },
@@ -494,10 +494,6 @@
       "configFilePath": "../src/tsconfig.json"
     },
     "referencedMap": {
-      "../node_modules/@types/fs-extra/index.d.ts": [
-        "../node_modules/@types/node/fs.d.ts",
-        "../node_modules/@types/node/index.d.ts"
-      ],
       "../node_modules/@types/node/assert.d.ts": [
         "../node_modules/@types/node/assert.d.ts"
       ],
@@ -740,22 +736,20 @@
       "../node_modules/startable/dist/startable.d.ts": [
         "../node_modules/@types/node/events.d.ts",
         "../node_modules/@types/node/index.d.ts"
+      ],
+      "../src/interfaces.ts": [
+        "../node_modules/@types/sqlite3/index.d.ts"
       ],
       "../src/promisified-sqlite.ts": [
         "../node_modules/@types/bluebird/index.d.ts",
-        "../node_modules/@types/fs-extra/index.d.ts",
         "../node_modules/@types/node/assert.d.ts",
         "../node_modules/@types/node/events.d.ts",
-        "../node_modules/@types/node/path.d.ts",
         "../node_modules/@types/sqlite3/index.d.ts",
-        "../node_modules/startable/dist/index.d.ts"
+        "../node_modules/startable/dist/index.d.ts",
+        "../src/interfaces.ts"
       ]
     },
     "exportedModulesMap": {
-      "../node_modules/@types/fs-extra/index.d.ts": [
-        "../node_modules/@types/node/fs.d.ts",
-        "../node_modules/@types/node/index.d.ts"
-      ],
       "../node_modules/@types/node/assert.d.ts": [
         "../node_modules/@types/node/assert.d.ts"
       ],
@@ -999,14 +993,16 @@
         "../node_modules/@types/node/events.d.ts",
         "../node_modules/@types/node/index.d.ts"
       ],
+      "../src/interfaces.ts": [
+        "../node_modules/@types/sqlite3/index.d.ts"
+      ],
       "../src/promisified-sqlite.ts": [
-        "../node_modules/@types/sqlite3/index.d.ts",
-        "../node_modules/startable/dist/index.d.ts"
+        "../node_modules/startable/dist/index.d.ts",
+        "../src/interfaces.ts"
       ]
     },
     "semanticDiagnosticsPerFile": [
       "../node_modules/@types/bluebird/index.d.ts",
-      "../node_modules/@types/fs-extra/index.d.ts",
       "../node_modules/@types/node/assert.d.ts",
       "../node_modules/@types/node/async_hooks.d.ts",
       "../node_modules/@types/node/base.d.ts",
@@ -1057,6 +1053,7 @@
       "../node_modules/startable/dist/adaptor.d.ts",
       "../node_modules/startable/dist/index.d.ts",
       "../node_modules/startable/dist/startable.d.ts",
+      "../src/interfaces.ts",
       "../src/promisified-sqlite.ts",
       "../../../../../usr/local/lib/node_modules/typescript/lib/lib.es2015.collection.d.ts",
       "../../../../../usr/local/lib/node_modules/typescript/lib/lib.es2015.core.d.ts",
