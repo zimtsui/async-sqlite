@@ -44,9 +44,9 @@ class Database extends Startable {
     }
 
     private async *step<T extends object>(statement: Statement<T>): AsyncGenerator<T> {
-        for (let row: T | undefined; ;) {
+        for (let row: T | null; ;) {
             assert(this.statements.has(statement));
-            row = await statement.getAsync();
+            row = await statement.getAsync() || null;
             if (!row) break;
             yield row;
         }

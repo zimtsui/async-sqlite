@@ -38,7 +38,7 @@ class Database extends Startable {
     async *step(statement) {
         for (let row;;) {
             assert(this.statements.has(statement));
-            row = await statement.getAsync();
+            row = await statement.getAsync() || null;
             if (!row)
                 break;
             yield row;
