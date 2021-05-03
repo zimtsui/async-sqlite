@@ -14,13 +14,15 @@ class Database extends Startable {
         this.statements = new Set();
     }
     async _start() {
+        // 如果打开过程中发生错误，比如目录不存在，new 依然会成功，而是出发 error 事件。
         this.db = promisifyAll(new sqlite.Database(this.filePath));
         await once(this.db, 'open');
     }
     async _stop() {
         for (const statement of this.statements)
             await statement.finalizeAsync();
-        if (this.db)
+        // 在一个打开过程中出错的对象上调用 close 会段错误。
+        if (this.db && await this.start().then(() => true, () => false))
             await this.db.closeAsync();
     }
     async sql(clause) {

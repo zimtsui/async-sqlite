@@ -19,6 +19,7 @@ class Database extends Startable {
     }
 
     protected async _start(): Promise<void> {
+        // 如果打开过程中发生错误，比如目录不存在，new 依然会成功，而是出发 error 事件。
         this.db = promisifyAll(new sqlite.Database(this.filePath));
         await once(this.db, 'open');
     }
@@ -26,7 +27,9 @@ class Database extends Startable {
     protected async _stop(): Promise<void> {
         for (const statement of this.statements)
             await statement.finalizeAsync();
-        if (this.db) await this.db.closeAsync();
+        // 在一个打开过程中出错的对象上调用 close 会段错误。
+        if (this.db && await this.start().then(() => true, () => false))
+            await this.db.closeAsync();
     }
 
     public async sql<T extends object | null = null>(clause: string): Promise<T[]> {
