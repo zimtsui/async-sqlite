@@ -8,8 +8,8 @@ declare class Database extends Startable {
     constructor(filePath: string);
     protected _start(): Promise<void>;
     protected _stop(): Promise<void>;
-    sql<T extends object | null = null>(clause: string): Promise<T[]>;
-    open<T extends object>(clause: string): Promise<StatementIterator<T>>;
+    sql<T extends object | null = null>(clause: string, ...params: any[]): Promise<T[]>;
+    open<T extends object>(clause: string, ...params: any[]): Promise<StatementIterator<T>>;
     private step;
     close(iterator: StatementIterator<object>): Promise<void>;
 }

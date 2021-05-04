@@ -212,8 +212,8 @@
         "affectsGlobalScope": true
       },
       "../src/interfaces.ts": {
-        "version": "011db3cd492d188b3e347855d86923d04e5e6e747888448988498929622be2cf",
-        "signature": "d14145d2a424958491ea58baa08d2edbbb26598b2d6d3f34f2c8fc9e18af94a0",
+        "version": "5b8c9ca5a53656bbf517c46e2006c1e2eb4961409f5c48cb3d08b1cbb393b11d",
+        "signature": "5992458d564efd4ce9cc7f7eeccdee6c2619ed4068e5f6bdcd7dd78603c77388",
         "affectsGlobalScope": false
       },
       "../node_modules/@types/node/globals.d.ts": {
@@ -472,8 +472,8 @@
         "affectsGlobalScope": false
       },
       "../src/promisified-sqlite.ts": {
-        "version": "813fa82d5581e0164165dd5c4d335af541a5039b598b9ab630b14f1582172690",
-        "signature": "df9a513bfd664352fb588672b2a93bae849ab4373e9e9f5ae79163aa7adbb39d",
+        "version": "9cda27ec47f5ee54434b7a78dcab49f2076d6e156232c9f097c33c23082d36f1",
+        "signature": "e42aaa9d64a7ac8b7e0b33af9f44b0dab87abd5e8e1701936d63f7cd57f779cb",
         "affectsGlobalScope": false
       }
     },

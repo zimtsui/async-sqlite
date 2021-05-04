@@ -25,13 +25,13 @@ class Database extends Startable {
         if (this.db && await this.start().then(() => true, () => false))
             await this.db.closeAsync();
     }
-    async sql(clause) {
+    async sql(clause, ...params) {
         assert(this.lifePeriod === "STARTED" /* STARTED */);
-        return await this.db.allAsync(clause);
+        return await this.db.allAsync(clause, ...params);
     }
-    async open(clause) {
+    async open(clause, ...params) {
         assert(this.lifePeriod === "STARTED" /* STARTED */);
-        const statement = await this.db.prepareAsync(clause);
+        const statement = await this.db.prepareAsync(clause, ...params);
         const iterator = this.step(statement);
         this.iterators.set(iterator, statement);
         this.statements.add(statement);

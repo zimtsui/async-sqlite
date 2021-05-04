@@ -32,14 +32,18 @@ class Database extends Startable {
             await this.db.closeAsync();
     }
 
-    public async sql<T extends object | null = null>(clause: string): Promise<T[]> {
+    public async sql<T extends object | null = null>(
+        clause: string, ...params: any[]
+    ): Promise<T[]> {
         assert(this.lifePeriod === LifePeriod.STARTED);
-        return await this.db!.allAsync<T>(clause);
+        return await this.db!.allAsync<T>(clause, ...params);
     }
 
-    public async open<T extends object>(clause: string): Promise<StatementIterator<T>> {
+    public async open<T extends object>(
+        clause: string, ...params: any[]
+    ): Promise<StatementIterator<T>> {
         assert(this.lifePeriod === LifePeriod.STARTED);
-        const statement = await this.db!.prepareAsync<T>(clause);
+        const statement = await this.db!.prepareAsync<T>(clause, ...params);
         const iterator = this.step(statement);
         this.iterators.set(iterator, statement);
         this.statements.add(statement);

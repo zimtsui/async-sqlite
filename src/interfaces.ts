@@ -5,8 +5,8 @@ declare module 'sqlite3' {
     }
     export interface Database {
         closeAsync(): Promise<void>;
-        allAsync<T extends object | null>(clause: string): Promise<T[]>;
-        prepareAsync<T extends object>(clause: string): Promise<Statement<T>>;
+        allAsync<T extends object | null>(clause: string, ...params: any[]): Promise<T[]>;
+        prepareAsync<T extends object>(clause: string, ...params: any[]): Promise<Statement<T>>;
     }
 }
 
