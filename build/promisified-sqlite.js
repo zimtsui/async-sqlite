@@ -1,11 +1,14 @@
-import sqlite from 'sqlite3';
-import { once } from 'events';
-import Bluebird from 'bluebird';
-import { Startable } from 'startable';
-import assert from 'assert';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Database = void 0;
+const sqlite = require("sqlite3");
+const events_1 = require("events");
+const Bluebird = require("bluebird");
+const startable_1 = require("startable");
+const assert = require("assert");
 const { promisifyAll } = Bluebird;
 sqlite.verbose();
-class Database extends Startable {
+class Database extends startable_1.Startable {
     constructor(filePath) {
         super();
         this.filePath = filePath;
@@ -14,9 +17,9 @@ class Database extends Startable {
         this.statements = new Set();
     }
     async _start() {
-        // 如果打开过程中发生错误，比如目录不存在，new 依然会成功，而是出发 error 事件。
+        // 如果打开过程中发生错误，比如目录不存在，也不会抛出异常。
         this.db = promisifyAll(new sqlite.Database(this.filePath));
-        await once(this.db, 'open');
+        await events_1.once(this.db, 'open');
     }
     async _stop() {
         for (const statement of this.statements)
@@ -55,5 +58,5 @@ class Database extends Startable {
         await statement.finalizeAsync();
     }
 }
-export { Database as default, Database, };
+exports.Database = Database;
 //# sourceMappingURL=promisified-sqlite.js.map

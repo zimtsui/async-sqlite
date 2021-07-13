@@ -2,12 +2,11 @@
     "name": "promisified-sqlite",
     "version": "0.0.1",
     "description": "",
-    "type": "module",
-    "main": "./dist/promisified-sqlite.js",
-    "types": "./dist/promisified-sqlite.d.ts",
+    "main": "./build/promisified-sqlite.js",
+    "types": "./build/promisified-sqlite.d.ts",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "tsc -b ./src"
+        "build": "tsc -b ./src/tsconfig.json"
     },
     "author": "Zim",
     "license": "SEE LICENSE IN ./LICENSE",

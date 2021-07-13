@@ -1,25 +1,36 @@
-import sqlite, { Statement } from 'sqlite3';
+import sqlite = require('sqlite3');
+import { Statement } from 'sqlite3';
 import { once } from 'events';
-import Bluebird from 'bluebird';
+import Bluebird = require('bluebird');
 import { Startable, LifePeriod } from 'startable';
-import assert from 'assert';
-import { StatementIterator } from './interfaces';
+import assert = require('assert');
 const { promisifyAll } = Bluebird;
 sqlite.verbose();
 
+declare module 'sqlite3' {
+    export interface Statement<T extends {} = any> {
+        getAsync(): Promise<T | undefined>;
+        finalizeAsync(): Promise<void>;
+    }
+    export interface Database {
+        closeAsync(): Promise<void>;
+        allAsync<T extends {} | null>(clause: string, ...params: any[]): Promise<T[]>;
+        prepareAsync<T extends {}>(clause: string, ...params: any[]): Promise<Statement<T>>;
+    }
+}
 
 class Database extends Startable {
     private db?: sqlite.Database;
     // WeakMap 属于元编程，最好不用
-    private iterators = new Map<StatementIterator<object>, Statement<object>>();
-    private statements = new Set<Statement<object>>();
+    private iterators = new Map<AsyncIterator<{}>, Statement<{}>>();
+    private statements = new Set<Statement<{}>>();
 
     constructor(private filePath: string) {
         super();
     }
 
     protected async _start(): Promise<void> {
-        // 如果打开过程中发生错误，比如目录不存在，new 依然会成功，而是出发 error 事件。
+        // 如果打开过程中发生错误，比如目录不存在，也不会抛出异常。
         this.db = promisifyAll(new sqlite.Database(this.filePath));
         await once(this.db, 'open');
     }
@@ -32,16 +43,16 @@ class Database extends Startable {
             await this.db.closeAsync();
     }
 
-    public async sql<T extends object | null = null>(
+    public async sql<T extends {} | null = null>(
         clause: string, ...params: any[]
     ): Promise<T[]> {
         assert(this.lifePeriod === LifePeriod.STARTED);
         return await this.db!.allAsync<T>(clause, ...params);
     }
 
-    public async open<T extends object>(
+    public async open<T extends {}>(
         clause: string, ...params: any[]
-    ): Promise<StatementIterator<T>> {
+    ): Promise<AsyncIterator<T>> {
         assert(this.lifePeriod === LifePeriod.STARTED);
         const statement = await this.db!.prepareAsync<T>(clause, ...params);
         const iterator = this.step(statement);
@@ -50,7 +61,7 @@ class Database extends Startable {
         return iterator;
     }
 
-    private async *step<T extends object>(statement: Statement<T>): AsyncGenerator<T> {
+    private async *step<T extends {}>(statement: Statement<T>): AsyncGenerator<T> {
         for (let row: T | null; ;) {
             assert(this.statements.has(statement));
             row = await statement.getAsync() || null;
@@ -59,7 +70,7 @@ class Database extends Startable {
         }
     }
 
-    public async close(iterator: StatementIterator<object>): Promise<void> {
+    public async close(iterator: AsyncIterator<{}>): Promise<void> {
         assert(this.lifePeriod === LifePeriod.STARTED);
         const statement = this.iterators.get(iterator);
         assert(statement);
@@ -70,6 +81,5 @@ class Database extends Startable {
 }
 
 export {
-    Database as default,
     Database,
 }
