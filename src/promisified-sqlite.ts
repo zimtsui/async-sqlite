@@ -22,7 +22,7 @@ declare module 'sqlite3' {
 class Database extends Startable {
     private db?: sqlite.Database;
     // WeakMap 属于元编程，最好不用
-    private iterators = new Map<AsyncIterator<{}>, Statement<{}>>();
+    private iterables = new Map<AsyncIterable<{}>, Statement<{}>>();
     private statements = new Set<Statement<{}>>();
 
     constructor(private filePath: string) {
@@ -52,16 +52,16 @@ class Database extends Startable {
 
     public async open<T extends {}>(
         clause: string, ...params: any[]
-    ): Promise<AsyncIterator<T>> {
+    ): Promise<AsyncIterable<T>> {
         assert(this.lifePeriod === LifePeriod.STARTED);
         const statement = await this.db!.prepareAsync<T>(clause, ...params);
-        const iterator = this.step(statement);
-        this.iterators.set(iterator, statement);
+        const iterable = this.step(statement);
+        this.iterables.set(iterable, statement);
         this.statements.add(statement);
-        return iterator;
+        return iterable;
     }
 
-    private async *step<T extends {}>(statement: Statement<T>): AsyncGenerator<T> {
+    private async *step<T extends {}>(statement: Statement<T>): AsyncIterable<T> {
         for (let row: T | null; ;) {
             assert(this.statements.has(statement));
             row = await statement.getAsync() || null;
@@ -70,11 +70,11 @@ class Database extends Startable {
         }
     }
 
-    public async close(iterator: AsyncIterator<{}>): Promise<void> {
+    public async close(iterator: AsyncIterable<{}>): Promise<void> {
         assert(this.lifePeriod === LifePeriod.STARTED);
-        const statement = this.iterators.get(iterator);
+        const statement = this.iterables.get(iterator);
         assert(statement);
-        this.iterators.delete(iterator);
+        this.iterables.delete(iterator);
         this.statements.delete(statement);
         await statement.finalizeAsync();
     }

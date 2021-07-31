@@ -13,14 +13,14 @@ declare module 'sqlite3' {
 declare class Database extends Startable {
     private filePath;
     private db?;
-    private iterators;
+    private iterables;
     private statements;
     constructor(filePath: string);
     protected _start(): Promise<void>;
     protected _stop(): Promise<void>;
     sql<T extends {} | null = null>(clause: string, ...params: any[]): Promise<T[]>;
-    open<T extends {}>(clause: string, ...params: any[]): Promise<AsyncIterator<T>>;
+    open<T extends {}>(clause: string, ...params: any[]): Promise<AsyncIterable<T>>;
     private step;
-    close(iterator: AsyncIterator<{}>): Promise<void>;
+    close(iterator: AsyncIterable<{}>): Promise<void>;
 }
 export { Database, };

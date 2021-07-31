@@ -13,7 +13,7 @@ class Database extends startable_1.Startable {
         super();
         this.filePath = filePath;
         // WeakMap 属于元编程，最好不用
-        this.iterators = new Map();
+        this.iterables = new Map();
         this.statements = new Set();
     }
     async _start() {
@@ -35,10 +35,10 @@ class Database extends startable_1.Startable {
     async open(clause, ...params) {
         assert(this.lifePeriod === "STARTED" /* STARTED */);
         const statement = await this.db.prepareAsync(clause, ...params);
-        const iterator = this.step(statement);
-        this.iterators.set(iterator, statement);
+        const iterable = this.step(statement);
+        this.iterables.set(iterable, statement);
         this.statements.add(statement);
-        return iterator;
+        return iterable;
     }
     async *step(statement) {
         for (let row;;) {
@@ -51,9 +51,9 @@ class Database extends startable_1.Startable {
     }
     async close(iterator) {
         assert(this.lifePeriod === "STARTED" /* STARTED */);
-        const statement = this.iterators.get(iterator);
+        const statement = this.iterables.get(iterator);
         assert(statement);
-        this.iterators.delete(iterator);
+        this.iterables.delete(iterator);
         this.statements.delete(statement);
         await statement.finalizeAsync();
     }
