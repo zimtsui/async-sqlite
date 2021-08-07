@@ -29,11 +29,11 @@ class Database extends startable_1.Startable {
             await this.db.closeAsync();
     }
     async sql(clause, ...params) {
-        assert(this.lifePeriod === "STARTED" /* STARTED */);
+        assert(this.readyState === "STARTED" /* STARTED */);
         return await this.db.allAsync(clause, ...params);
     }
     async open(clause, ...params) {
-        assert(this.lifePeriod === "STARTED" /* STARTED */);
+        assert(this.readyState === "STARTED" /* STARTED */);
         const statement = await this.db.prepareAsync(clause, ...params);
         const iterable = this.step(statement);
         this.iterables.set(iterable, statement);
@@ -50,7 +50,7 @@ class Database extends startable_1.Startable {
         }
     }
     async close(iterator) {
-        assert(this.lifePeriod === "STARTED" /* STARTED */);
+        assert(this.readyState === "STARTED" /* STARTED */);
         const statement = this.iterables.get(iterator);
         assert(statement);
         this.iterables.delete(iterator);

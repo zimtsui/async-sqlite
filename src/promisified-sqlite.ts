@@ -2,7 +2,7 @@ import sqlite = require('sqlite3');
 import { Statement } from 'sqlite3';
 import { once } from 'events';
 import Bluebird = require('bluebird');
-import { Startable, LifePeriod } from 'startable';
+import { Startable, ReadyState } from 'startable';
 import assert = require('assert');
 const { promisifyAll } = Bluebird;
 sqlite.verbose();
@@ -46,14 +46,14 @@ class Database extends Startable {
     public async sql<T extends {} | null = null>(
         clause: string, ...params: any[]
     ): Promise<T[]> {
-        assert(this.lifePeriod === LifePeriod.STARTED);
+        assert(this.readyState === ReadyState.STARTED);
         return await this.db!.allAsync<T>(clause, ...params);
     }
 
     public async open<T extends {}>(
         clause: string, ...params: any[]
     ): Promise<AsyncIterable<T>> {
-        assert(this.lifePeriod === LifePeriod.STARTED);
+        assert(this.readyState === ReadyState.STARTED);
         const statement = await this.db!.prepareAsync<T>(clause, ...params);
         const iterable = this.step(statement);
         this.iterables.set(iterable, statement);
@@ -71,7 +71,7 @@ class Database extends Startable {
     }
 
     public async close(iterator: AsyncIterable<{}>): Promise<void> {
-        assert(this.lifePeriod === LifePeriod.STARTED);
+        assert(this.readyState === ReadyState.STARTED);
         const statement = this.iterables.get(iterator);
         assert(statement);
         this.iterables.delete(iterator);
